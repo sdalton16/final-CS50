@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Multiplication & Division!</title>
+    </head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script type="text/javascript">
+        let cor_ans;
+        let streak = 0;
+
+        function Play(){
+            document.getElementById("check").hidden = true;
+            document.getElementById("newprob").hidden = true;
+            document.getElementById("game").hidden = false;
+            document.getElementById("start").hidden = true;
+            document.getElementById("ans1").disabled = false;
+            document.getElementById("ans2").disabled = false;
+            document.getElementById("ans3").disabled = false;
+            document.getElementById("ans4").disabled = false;
+
+            let num1 = Math.floor(Math.random()*10);
+            let num2 = Math.floor(Math.random()*10);
+            const operations = ["x","/"];
+            let op_index = Math.floor(Math.random()*2);
+            let prob_op = operations[op_index];
+
+            if (prob_op == "/"){
+                num2 = num1 * (Math.floor(Math.random()*10)+1);
+            }
+
+            document.getElementById("problem").innerHTML = num2 + " " + prob_op + " " + num1;
+
+            if (prob_op == "x"){
+                cor_ans = num1 * num2;
+            }
+
+            if (prob_op == "/"){
+                cor_ans = num2 / num1;
+            }
+
+            let WrongAns1 = Math.floor(Math.random()*10) * Math.floor(Math.random()*10);
+            let WrongAns2 = Math.floor(Math.random()*10) * Math.floor(Math.random()*10);
+            let WrongAns3 = Math.floor(Math.random()*10) * Math.floor(Math.random()*10);
+            let WrongAns4 = Math.floor(Math.random()*10) * Math.floor(Math.random()*10);
+
+            if (prob_op == "/"){
+                let WrongAns1 = Math.floor(Math.random()*10) / Math.floor(Math.random()*10);
+                let WrongAns2 = Math.floor(Math.random()*10) / Math.floor(Math.random()*10);
+                let WrongAns3 = Math.floor(Math.random()*10) / Math.floor(Math.random()*10);
+                let WrongAns4 = Math.floor(Math.random()*10) / Math.floor(Math.random()*10);
+            }
+
+            if (cor_ans == WrongAns1){
+                WrongAns1++;
+            }
+            document.getElementById("ans1").innerHTML = WrongAns1
+
+            if (cor_ans == WrongAns2){
+                WrongAns2++;
+            }
+            document.getElementById("ans2").innerHTML = WrongAns2
+
+            if (cor_ans == WrongAns3){
+                WrongAns3++;
+            }
+            document.getElementById("ans3").innerHTML = WrongAns3
+
+            if (cor_ans == WrongAns4){
+                WrongAns4++;
+            }
+            document.getElementById("ans4").innerHTML = WrongAns4
+
+
+            let correctAnswerIndex = Math.floor(Math.random()*4)+1;
+            let correctAnswerID = "ans" + correctAnswerIndex;
+
+            document.getElementById(correctAnswerID).innerHTML = cor_ans;
+        }
+
+        function CheckAns(id){
+            let user_ans = document.getElementById("ans" + id).innerHTML;
+
+            if (user_ans == cor_ans){
+                document.getElementById("check").hidden = false;
+                document.getElementById("check").innerHTML = "Correct!";
+                document.getElementById("newprob").hidden = false;
+                document.getElementById("ans1").disabled = true;
+                document.getElementById("ans2").disabled = true;
+                document.getElementById("ans3").disabled = true;
+                document.getElementById("ans4").disabled = true;
+                streak++;
+            }
+
+            if (user_ans != cor_ans){
+                document.getElementById("check").hidden = false;
+                document.getElementById("check").innerHTML = "Not Quite!";
+                document.getElementById("newprob").hidden = false;
+                document.getElementById("ans1").disabled = true;
+                document.getElementById("ans2").disabled = true;
+                document.getElementById("ans3").disabled = true;
+                document.getElementById("ans4").disabled = true;
+                streak = 0;
+            }
+
+            document.getElementById("streak").innerHTML = "Streak: " + streak;
+            document.getElementById("save").hidden = false;
+        }
+
+        function SaveGame(){
+            let user_streak = JSON.stringify(streak);
+            $.ajax({
+                url:"/multiply_divide",
+                type:"POST",
+                contentType: "application/json",
+                data: user_streak
+            })
+        }
+    </script>
+    <body class="font">
+        <div class="navbar">
+            <ul>
+                <li style="color:white">MATH!</li>
+                <li><a href="/">Home</a></li>
+                <li style="color:white;text-align:center">|</li>
+                <li><a href="/leaderboard">Leaderboard</a></li>
+                <li style="float:right"><a href="/login">Logout</a></li>
+            </ul>
+        </div>
+        <main>
+            <div class="center">
+                <button id="start" onclick="Play()">Start Game</button>
+            </div>
+            <div class="center" id="game" hidden>
+                <h1>Solve:</h1>
+                <div id="problem"></div>
+                <br>
+                <button id="ans1" onclick="CheckAns(1)"></button>
+                <button id="ans2" onclick="CheckAns(2)"></button>
+                <button id="ans3" onclick="CheckAns(3)"></button>
+                <button id="ans4" onclick="CheckAns(4)"></button>
+            </div>
+            <div class="alert">
+                <div id="check"></div>
+                <br>
+                <button id="newprob" hidden onclick="Play()">Next Problem!</button>
+            </div>
+            <div class="score">
+                <div id="streak"></div>
+                <br>
+                <form method="GET" action="/">
+                    <button onclick="SaveGame()" id="save" hidden>Save Game</button>
+                </form>
+            </div>
+        </main>
+    </body>

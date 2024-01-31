@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Math!</title>
+    </head>
+    <body class="font">
+        <div class="navbar">
+            <ul>
+                <li style="color:white">MATH!</li>
+                <li><a href="/">Home</a></li>
+                <li style="color:white;text-align:center">|</li>
+                <li><a href="/leaderboard">Leaderboard</a></li>
+                <li style="float:right"><a href="/login">Logout</a></li>
+            </ul>
+        </div>
+        <main>
+            <div class="leaderboard">
+                <div class="leaderboards">
+                    <h2 class="title">Addition and Subtraction</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="ltd">Player</th>
+                                <th id="ltd">Streak</th>
+                                <th id="ltd">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leader in add_sub_leaders %}
+                            <tr>
+                                <td id="ltd">{{ leader.user }}</td>
+                                <td id="ltd">{{ leader.score }}</td>
+                                <td id="ltd">{{ leader.date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table_break"></div>
+                <div   class="leaderboards">
+                    <h2 class="title">Mulitplication & Division!</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="ltd">Player</th>
+                                <th id="ltd">Streak</th>
+                                <th id="ltd">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leader in multiply_divide_leaders %}
+                            <tr>
+                                <td id="ltd">{{ leader.user }}</td>
+                                <td id="ltd">{{ leader.score }}</td>
+                                <td id="ltd">{{ leader.date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </body>

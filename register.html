@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Math: Register!</title>
+    </head>
+    <body class="font">
+        <main class="center">
+            <h1>Welcome to Math! Register:</h1>
+            <form action="/register" method="post">
+                <div>
+                    <input id="username" name="username" placeholder="Username" type="text">
+                </div>
+                <br>
+                <div>
+                    <input id="password" name="password" placeholder="Password" type="password">
+                </div>
+                <br>
+                <div>
+                    <input id="confirm" name="confirm" placeholder="Confirm Password" type="password">
+                </div>
+                <br>
+                <button type="submit">Register!</button>
+            </form>
+            <br>
+            <div>
+                <a href="/login">Back to Login</a>
+            </div>
+            <br>
+            <mark>
+                {{ notice }}
+            </mark>
+        </main>
+    </body>
+</html>

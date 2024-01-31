@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Math!</title>
+    </head>
+    <body class="font">
+        <div class="navbar">
+            <ul>
+                <li style="color:white">MATH!</li>
+                <li><a href="/">Home</a></li>
+                <li style="color:white;text-align:center">|</li>
+                <li><a href="/leaderboard">Leaderboard</a></li>
+                <li style="float:right"><a href="/login">Logout</a></li>
+            </ul>
+        </div>
+        <main>
+            <div class="center">
+                <h1>Choose a Game Mode:</h1>
+                <form action="/" method="post">
+                    <select name="game_select">
+                        <option disabled selected>Game Mode</option>
+                        <option>Addition & Subtraction</option>
+                        <option>Multiplication & Division</option>
+                    </select>
+                    <button type="submit">Play!</button>
+                </form>
+            </div>
+        </main>
+    </body>
